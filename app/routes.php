@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-	echo "Test";
+	echo "Testing testing. 123456";
 	return View::make('hello');
 });
 Route::get('/dbDisplay', function()
