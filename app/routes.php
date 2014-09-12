@@ -13,5 +13,22 @@
 
 Route::get('/', function()
 {
+	echo "Test";
 	return View::make('hello');
+});
+Route::get('/dbDisplay', function()
+{
+	$posts = DB::table('posts')->get();
+	dd($posts);
+});
+Route::get('/dbAdd/{title?}', function($title = "")
+{
+	if(DB::insert('insert into posts (title, body) values(?, ?)', array("$title", "Yet another test post body.")))
+	{
+		echo 'the command has succeeded';
+	}
+	else 
+	{
+		echo 'the command has failed.';
+	}
 });
