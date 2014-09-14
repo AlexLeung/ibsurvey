@@ -16,6 +16,7 @@ Route::get('/', function()
 	echo "Testing testing. 123456";
 	return View::make('hello');
 });
+/*
 Route::get('/dbDisplay', function()
 {
 	$posts = DB::table('posts')->get();
@@ -31,4 +32,4 @@ Route::get('/dbAdd/{title?}', function($title = "")
 	{
 		echo 'the command has failed.';
 	}
-});
+});*/
