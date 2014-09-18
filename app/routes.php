@@ -1,5 +1,4 @@
 <?php
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,14 +9,20 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::group(array('domain'=>'test.ibsurvey.com'), function(){
+	Route::get('/', function()
+	{
+		echo 'testing the custom domain';
+	});
+});
 
 Route::get('/', function()
 {
 	echo "Testing testing. 123456";
 	return View::make('hello');
 });
-/*
-Route::get('/dbDisplay', function()
+
+Route::get('/schools', function()
 {
 	$posts = DB::table('posts')->get();
 	dd($posts);
@@ -32,4 +37,4 @@ Route::get('/dbAdd/{title?}', function($title = "")
 	{
 		echo 'the command has failed.';
 	}
-});*/
+});
