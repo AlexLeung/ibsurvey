@@ -16,11 +16,8 @@ class CreateSurveysTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
-			$table->integer('schoolID');
-			$table->timestamp('openTime');
-			$table->timestamp('closeTime');
-			$table->longText('questionStore');
-			$table->longText('answerStore');
+			$table->integer('school_id');
+			$table->timestamps();
 		});
 	}
 

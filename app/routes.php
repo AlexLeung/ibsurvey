@@ -1,4 +1,5 @@
 <?php
+use Monolog\Handler\NullHandler;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -9,32 +10,33 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::group(array('domain'=>'test.ibsurvey.com'), function(){
-	Route::get('/', function()
-	{
-		echo 'testing the custom domain';
-	});
+date_default_timezone_set('America/Los_Angeles');
+
+Route::get('/', 'HomeController@showWelcome');
+Route::get('/schools', 'SchoolsController@index');
+Route::get('/schools/{schoolName}', 'SurveysController@index');
+Route::get('/schools/{schoolName}/{surveyName}', 'SurveysController@show');
+Route::post('/schools/{schoolName}/{surveyName}', 'SurveysController@update');
+Route::get('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@show');
+Route::put('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@selectOption');
+Route::post('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@store');
+Route::get('signup', array('as' => 'signupGet', 'uses' => 'AccountsController@signupGet'));
+Route::post('/signup', array('as' => 'signupPost', 'uses' => 'AccountsController@signupPost'));
+Route::get('/login', array('as' => 'loginGet', 'uses' => 'AccountsController@loginGet'));
+Route::post('/login', array('as' => 'loginPost', 'uses' => 'AccountsController@loginPost'));
+Route::get('/logout', array('as' => 'logout', 'uses' => 'AccountsController@logout'));
+Route::get('/password', 'AccountsController@changePassword');
+
+Route::get('/test', function()
+{
+	$group = Group::where('name', '=', 'Teacher')->first();
+	$group->password = Hash::make('teacherPass');
+	$group->save();
 });
 
-Route::get('/', function()
+Route::get('/dev', function()
 {
-	echo "Testing testing. 123456";
-	return View::make('hello');
+	return View::make('devform');
 });
-
-Route::get('/schools', function()
-{
-	$posts = DB::table('posts')->get();
-	dd($posts);
-});
-Route::get('/dbAdd/{title?}', function($title = "")
-{
-	if(DB::insert('insert into posts (title, body) values(?, ?)', array("$title", "Yet another test post body.")))
-	{
-		echo 'the command has succeeded';
-	}
-	else 
-	{
-		echo 'the command has failed.';
-	}
-});
+Route::post('/dev', 'DevTestController@devEdit');
+Route::get('dev/fast', 'DevTestController@quickUser');

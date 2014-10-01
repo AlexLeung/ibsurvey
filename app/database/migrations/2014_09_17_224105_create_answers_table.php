@@ -14,10 +14,11 @@ class CreateAnswersTable extends Migration {
 	{
 		Schema::create('answers', function(Blueprint $table)
 		{
-			$table->integer('profileID');
-			$table->integer('surveyID');
-			$table->integer('questionID');
-			$table->text('answer');
+			$table->increments('id');
+			$table->integer('user_id');
+			$table->integer('survey_id');
+			$table->longText('answer_store');
+			$table->timestamps();
 		});
 	}
 
