@@ -1,0 +1,146 @@
+#tableColumn {
+  max-width: 60%;
+  min-width: 60%;
+  margin-left: 20%;
+  
+}
+/*****************************************/
+/**************Table Stuff****************/
+/*****************************************/
+th {
+  background-color: rgba(148,148,148,0.5);
+}
+
+th th {
+  background-color: transparent;
+}
+
+th p {
+  font-weight: bold;
+}
+
+table
+{
+  border-collapse: collapse;
+  border-style: hidden;
+  width: 100%;
+  //background-image: url(http://gps.wrdsb.ca/files/2014/02/TriWorldSchool2Colourlarge.jpg);
+  background-position: center;
+  background-attachment: fixed;
+  background-color: white;
+  background-repeat: no-repeat;
+}
+
+table table {
+  background-image: none;
+  background-color: transparent;
+}
+
+td {
+  vertical-align: top;
+  background-color: rgba(255,255,255,0.5);
+}
+
+td td {
+  background-color: transparent;
+}
+
+.tableColumnRadios th , .tableColumnRadios td{
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tableColumnRadios input[type="radio"]:checked + label {
+    background-color:rgba(200,200,200,0.7);
+}
+
+.tableColumnRadios input[type="radio"] {
+    display:none;
+}
+
+/*Chrome radio handling*/
+
+.Chrome .tableColumnRadios label{
+  padding-left:50px;  
+  padding-top:32px;
+  padding-bottom:51px;
+}
+
+/*Safari radio handling*/
+
+.Safari .tableColumnRadios input[type="radio"] {
+    display: auto;
+}
+
+/*IE radio handling*/
+
+.IE .tableColumnRadios label{
+  padding-left:50px;  
+  padding-top:31px;
+  padding-bottom:51px;
+}
+
+/*Firefox radio handling*/
+
+.Firefox .tableColumnRadios label{
+  padding-left:50px;  
+  padding-top:31px;
+  padding-bottom:51px;
+}
+
+/*back to other table stuff*/
+
+.mainEvaluation .tableColumnRadios th , .mainEvaluation .tableColumnRadios td{
+  min-width: 50px;
+  max-width: 50px;
+}
+
+.lowOrHigh .tableColumnRadios th , .lowOrHigh .tableColumnRadios td{
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.answerColumnHeader {
+  text-align: center;
+}
+
+.lowOrHigh .questionText {
+  background-color: rgba(200,200,200,0.5);
+  min-width: 500px;
+  max-width: 500px;
+}
+
+.lowOrHigh .tableColumnRadios label{
+  padding-left:129px;
+}
+
+.tableMark {
+  width: 40px;
+  text-align: center;
+}
+
+.questionText p {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.questionColumnHeader {
+  vertical-align:top;
+  text-align: left;
+}
+
+.questionColumnHeader p {
+  padding-left: 5px;
+}
+
+table td, table th {
+  border: 2px solid black;
+  padding: 0;
+  height: 100px;
+}
+
+.mainEvaluation, .lowOrHigh {
+  border: 2px solid black;
+  min-width: 800px;
+  max-width: 800px;
+}

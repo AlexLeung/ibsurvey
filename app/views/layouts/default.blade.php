@@ -1,9 +1,4 @@
 <!doctype html>
-<?php 
-
-$loggedIn = Auth::check();
-
-?>
 <html>
 <head>
 <style type="text/css">
@@ -22,11 +17,21 @@ $loggedIn = Auth::check();
 @yield('head')
 </head>
 <body>
-@if($loggedIn)
-	<div style="text-align: right;">
-		{{ link_to(URL::route('logout', array('QS' => Request::path())), "Log out") }}
+@section('body')
+	<div style="text-align: right; padding-right: 20px; border-bottom: 1px black solid;">
+		@if(Auth::check())
+			| {{ Auth::user()->email }} |&nbsp&nbsp&nbsp
+			{{ Auth::user()->name }}'s Account:
+			&nbsp&nbsp&nbsp
+			{{ link_to(URL::route('passwordGet', array('intended' => Request::path())), "Change Password") }}
+			&nbsp&nbsp&nbsp
+			{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Update Account") }}
+			&nbsp&nbsp&nbsp
+			{{ link_to(URL::route('logout', array('QS' => Request::path())), "Log out") }}
+		@else
+			{{ link_to(URL::route('loginGet', array('QS' => Request::path())), "Log in") }}
+		@endif
 	</div>
-@endif
-@yield('body')
+@show
 </body>
 </html>

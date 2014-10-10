@@ -9,23 +9,12 @@ class SurveysController extends \BaseController {
 	 */
 	public function index($schoolName)
 	{
-		try
-		{
-			$school = School::where('name', '=', $schoolName)->firstOrFail();
-		}
-		catch (Exception $e)
-		{
+		$school = School::where('name', '=', $schoolName)->first();
+		if(!$school)
 			return Redirect::to('/schools');
-		}
-		echo "Welcome to the page for $schoolName";
-		echo '<br><br>';
-		echo 'Here is a list of surveys for this school:';
-		echo '<ol>';
-		foreach ($school->surveys as $survey)
-		{
-			echo "<li><a href=\"/schools/$schoolName/$survey->name\">$survey->name</a></li>";
-		}
-		echo'</ol>';
+		foreach($school->surveys as $survey)
+			$surveyNames[] = $survey->name;
+		return View::make('surveyIndex')->with('school', $school)->with('surveyNames', $surveyNames);
 	}
 
 
@@ -109,12 +98,14 @@ class SurveysController extends \BaseController {
 	 */
 	public function update($schoolName, $surveyName)
 	{
+		if(!Auth::check() || Auth::user()->group->name != "Admin")
+			return Redirect::back();
 		//We need to figure out what kind of post we are getting.
 		$school = School::where('name', '=', $schoolName)->first();
 		$survey = $school->surveys()->where('name', $surveyName)->first();
 		$name = Input::get('name');
 		$questions = Input::get('questions');
-		$rules = array('name' => 'required');
+		$rules = array('name' => 'required|alpha_num');
 		$fields['questions'] = NULL;
 		$validator;
 		if(Input::has('changeName'))
@@ -135,7 +126,7 @@ class SurveysController extends \BaseController {
 		}
 		else if(Input::has('changeQuestions'))
 		{
-			$fields['questions'] = Survey::parseQuestionStore($questions, $school->id, false);
+			$fields['questions'] = Survey::parseQuestionStore($questions, $school->id);
 			if($fields['questions'][0])
 				File::put(app_path()."/questions/$survey->id.qs", $questions);
 			$validator = Validator::make(array('name' => 'present'), $rules);
@@ -145,7 +136,7 @@ class SurveysController extends \BaseController {
 			$fields = array('time' => 'Default');
 			$rules = array('time' => 'required');
 			$submitName = '';
-			$fieldName ='';
+			$fieldName = '';
 			$group = NULL;
 			foreach($school->groups as $potentialGroup)
 			{

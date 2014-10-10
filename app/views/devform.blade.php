@@ -3,7 +3,7 @@
 
 @stop
 @section('body')
-
+@parent
 {{  Form::open()  }}
 {{  Form::label('school', 'School: ')  }}
 {{  Form::text('school', '', array())  }}

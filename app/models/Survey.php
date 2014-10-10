@@ -29,10 +29,11 @@ class Survey extends Eloquent
 		return $this->belongsTo('School');
 	}
 	
-	public static function parseQuestionStore($file, $schoolID, $returnFile)
+	public static function parseQuestionStore($file, $schoolID, $returnFile = false)
 	{
 		$file = explode("\n", $file);
 		$fileLength = count($file);
+		$origMarks = array();
 		for ($lineI = 0; $lineI < $fileLength; ++$lineI)
 		{
 			$file[$lineI] = explode("|", $file[$lineI]);
@@ -81,7 +82,9 @@ class Survey extends Eloquent
 				}
 				$groupRecords[] = $file[$lineI][1][$i];
 			}
-			//Check to make sure that the original mark is unique (may not be needed).
+			if(in_array($file[$lineI][2], $origMarks))
+				return array(false, "In question $lineI, the original mark {$file[$lineI][2]} already exists.");
+			$origMarks[] = $file[$lineI][2];
 		}
 		if($returnFile)
 			return array(true, $file);

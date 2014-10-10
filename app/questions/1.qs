@@ -55,11 +55,23 @@ Q|Teacher,Student|C23|The written curriculum builds on students’ previous lear
 Q|Teacher,Student|C24|The written curriculum identifies the knowledge, concepts, skills and attitudes to be developed over time.
 Q|Teacher,Student,Community|C25|The written curriculum allows for meaningful student action in response to student’s own needs and the needs of others.
 Q|Teacher,Student|C26|The written curriculum incorporates relevant experiences for students.
-Q|Teacher,Student|C26|The written curriculum promotes students’ awareness of individual, local, national and world issues.
+Q|Teacher,Student|C27|The written curriculum promotes students’ awareness of individual, local, national and world issues.
 Q|Teacher,Student|C28|The written curriculum provides opportunities for reflection on human commonality, diversity and multiple perspectives.
 Q|Admin,Teacher|C29|The written curriculum is informed by current IB publications and is reviewed regularly to incorporate developments in the programme(s).
 Q|Admin,Teacher|C210|The written curriculum integrates the policies developed by the school to support the programme(s).\\
 Q|Admin,Teacher|C211|The written curriculum fosters development of the IB learner profile attributes.
+Q|Teacher,Student|C31a|Teaching and learning at the school addresses all of the aims and objectives of each subject.
+Q|Teacher,Student|C32|Teaching and learning engages students as inquirers and thinkers.
+Q|Teacher,Student|C33|Teaching and learning builds on what students know and can do.
+Q|Teacher,Student|C34|Teaching and learning promotes the understanding and practice of academic honesty.
+Q|Teacher,Student|C35|Teaching and learning supports students to become actively responsible for their own learning.
+Q|Teacher,Student|C36|Teaching and learning addresses human commonality, diversity and multiple perspectives.
+Q|Teacher,Student|C37|Teaching and learning addresses the diversity of student language needs, including those for students learning in a language(s) other than mother tongue.
+Q|Teacher,Student|C38|Teaching and learning demonstrates that all teachers are responsible for language development of students.
+Q|Teacher,Student|C39|Teaching and learning uses a range and variety of strategies.
+Q|Teacher,Student|C310|Teaching and learning differentiates instruction to meet students’ learning needs and styles.
+Q|Teacher,Student|C311|Teaching and learning incorporates a range of resources, including information technologies.
+Q|Teacher,Student|C312|Teaching and learning develops student attitudes and skills that allow for meaningful student action in response to students’ own needs and needs of others.
 Q|Teacher,Student|C41a|Assessment of student learning is based on the objectives and assessment criteria specific to each subject.
 Q|Admin,Teacher,Community|C42|The school communicates its assessment philosophy, policy and procedures to the school community.
 Q|Teacher,Student|C43|The school uses a range of strategies and tools to assess student learning.
@@ -68,15 +80,3 @@ Q|Admin|C45|The school has systems for recording student progress aligned with t
 Q|Admin,Teacher|C47|The school analyses assessment data to inform teaching and learning.
 Q|Teacher,Student|C48|The school provides opportunities for students to participate in, and reflect on, the assessment of their work.
 Q|Admin,Student|C49|The school has systems in place to ensure that all students can demonstrate consolidation of their learning through the completion of the Diploma Programme extended essay.
-Q|Teacher,Student|C31a|Teaching and learning at the school addresses all of the aims and objectives of each subject.
-Q|Teacher,Student|C2|Teaching and learning engages students as inquirers and thinkers.
-Q|Teacher,Student|C3|Teaching and learning builds on what students know and can do.
-Q|Teacher,Student|C4|Teaching and learning promotes the understanding and practice of academic honesty.
-Q|Teacher,Student|C5|Teaching and learning supports students to become actively responsible for their own learning.
-Q|Teacher,Student|C6|Teaching and learning addresses human commonality, diversity and multiple perspectives.
-Q|Teacher,Student|C7|Teaching and learning addresses the diversity of student language needs, including those for students learning in a language(s) other than mother tongue.
-Q|Teacher,Student|C8|Teaching and learning demonstrates that all teachers are responsible for language development of students.
-Q|Teacher,Student|C9|Teaching and learning uses a range and variety of strategies.
-Q|Teacher,Student|C10|Teaching and learning differentiates instruction to meet students’ learning needs and styles.
-Q|Teacher,Student|C11|Teaching and learning incorporates a range of resources, including information technologies.
-Q|Teacher,Student|C12|Teaching and learning develops student attitudes and skills that allow for meaningful student action in response to students’ own needs and needs of others.

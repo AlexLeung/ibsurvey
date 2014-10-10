@@ -36,20 +36,15 @@ class DevTestController extends \BaseController {
 		{
 			$group = Group::firstOrCreate(array('name' => $input['group'], 'school_id' => $school->id));
 			if($input['group'] != "Admin")
+			{
+				$group->password = Hash::make("{$input['group']}Pass");
+				$group->save();
 				Group::firstOrCreate(array('name' => 'Admin', 'school_id' => $school->id));
+			}
 		}
 		if($input['group'] && $input['survey'])
 		{
-			$relationshipExists = true;
-			try
-			{
-				$group->surveys()->where('survey_id', '=', $survey->id)->firstorfail();
-			}
-			catch(Exception $e)
-			{
-				$relationshipExists = false;
-			}
-			if(!$relationshipExists)
+			if(!$group->surveys()->where('survey_id', '=', $survey->id)->first())
 				$group->surveys()->attach($survey->id, array('open_time' => time(), 'close_time' => time()));
 		}
 		echo 'successfull insertion submission';

@@ -7,6 +7,7 @@
 	$isAdmin = Auth::check() && Auth::user()->group->name == "Admin";	
 ?>
 @section('body')
+@parent
 You have arrived at {{$school->name}}'s survey:<br><h2>{{$survey->name}}</h2>
 @if($isAdmin)
 	{{ Form::open() }}
@@ -75,13 +76,5 @@ Here is a list of groups:
 	@endif
 	{{ Form::input('submit', 'changeQuestions', 'Update Questions') }}
 	{{ Form::close() }}
-@else
-	<br><br><br><br>
-	Are you an administrator?
-	@if(Auth::check())
-		Log out {{ link_to(URL::route('logout', array('QS' => Request::path())), 'here') }} then log in to your administrator account to change this survey's settings.
-	@else
-		Log in {{ link_to(URL::route('loginGet', array('QS' => Request::path())), 'here') }} to change this survey's settings.
-	@endif	
 @endif
 @stop

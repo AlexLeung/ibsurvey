@@ -20,20 +20,19 @@ Route::post('/schools/{schoolName}/{surveyName}', 'SurveysController@update');
 Route::get('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@show');
 Route::put('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@selectOption');
 Route::post('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@store');
-Route::get('signup', array('as' => 'signupGet', 'uses' => 'AccountsController@signupGet'));
-Route::post('/signup', array('as' => 'signupPost', 'uses' => 'AccountsController@signupPost'));
-Route::get('/login', array('as' => 'loginGet', 'uses' => 'AccountsController@loginGet'));
-Route::post('/login', array('as' => 'loginPost', 'uses' => 'AccountsController@loginPost'));
-Route::get('/logout', array('as' => 'logout', 'uses' => 'AccountsController@logout'));
-Route::get('/password', 'AccountsController@changePassword');
 
-Route::get('/test', function()
-{
-	$group = Group::where('name', '=', 'Teacher')->first();
-	$group->password = Hash::make('teacherPass');
-	$group->save();
-});
+//Account Routes.
+Route::get('account', array('as' => 'accountGet', 'uses' => 'AccountsController@accountGet'));
+Route::post('account', array('as' => 'accountPost', 'uses' => 'AccountsController@accountPost'));
+Route::get('account/delete', array('as' => 'deleteGet', 'uses' => 'AccountsController@deleteGet'));
+Route::post('account/delete', array('as' => 'deletePost', 'uses' => 'AccountsController@deletePost'));
+Route::get('account/login', array('as' => 'loginGet', 'uses' => 'AccountsController@loginGet'));
+Route::post('account/login', array('as' => 'loginPost', 'uses' => 'AccountsController@loginPost'));
+Route::get('account/logout', array('as' => 'logout', 'uses' => 'AccountsController@logout'));
+Route::get('account/password', array('as' => 'passwordGet', 'uses' => 'AccountsController@changePasswordGet'));
+Route::post('account/password', array('as' => 'passwordPost', 'uses' => 'AccountsController@changePasswordPost'));
 
+//Development Routes that should be deleted before the app is put into production mode.
 Route::get('/dev', function()
 {
 	return View::make('devform');

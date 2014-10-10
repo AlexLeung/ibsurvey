@@ -17,10 +17,7 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		echo '<br><br><br><br><h1>Welcome to ibsurvey.com!</h1>';
-		echo '<h5>Where ib schools can launch surveys at affordable prices.</h5>';
-		echo "<br><br><a href=\"schools\">List of Schools</a>";
-		return View::make('hello');
+		return View::make('front');
 	}
 
 }
