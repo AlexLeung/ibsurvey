@@ -33,9 +33,11 @@ Route::get('account/password', array('as' => 'passwordGet', 'uses' => 'AccountsC
 Route::post('account/password', array('as' => 'passwordPost', 'uses' => 'AccountsController@changePasswordPost'));
 
 //Development Routes that should be deleted before the app is put into production mode.
+/*
 Route::get('/dev', function()
 {
 	return View::make('devform');
 });
 Route::post('/dev', 'DevTestController@devEdit');
 Route::get('dev/fast', 'DevTestController@quickUser');
+*/
