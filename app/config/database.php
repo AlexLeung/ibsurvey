@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => isset($_SERVER['DB2_HOST']) ? $_SERVER['DB2_HOST'] : 'localhost',
-			'database'  => isset($_SERVER['DB2_NAME']) ? $_SERVER['DB2_NAME'] : 'ibsurvey',
-			'username'  => isset($_SERVER['DB2_USER']) ? $_SERVER['DB2_USER'] : 'AlexLeung',
-			'password'  => isset($_SERVER['DB2_PASS']) ? $_SERVER['DB2_PASS'] : 'localpass',
+			'host'      => isset($_SERVER['DB1_HOST']) ? $_SERVER['DB1_HOST'] : 'localhost',
+			'database'  => 'ibsurvey',
+			'username'  => 'vivan',
+			'password'  => 'ghGZ47B1',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
