@@ -1,5 +1,5 @@
 <?php
-
+require_once 'config_debug_vars.php';
 return array(
 
 	/*
@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => $debugSettings,
 
 	/*
 	|--------------------------------------------------------------------------

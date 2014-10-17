@@ -9,3 +9,5 @@ Thumbs.db
 .buildpath
 .project
 .settings/
+/app/config/config_db_vars.php
+/app/config/config_debug_vars.php

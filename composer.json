@@ -21,15 +21,15 @@
 	},
 	"scripts": {
 		"post-install-cmd": [
-			"php artisan clear-compiled",
-			"php artisan optimize"
+			"php C:\\MyPrograms\\EasyPHP-DevServer-14.1VC11\\data\\localweb\\projects\\ibsurvey\\artisan clear-compiled",
+			"php C:\\MyPrograms\\EasyPHP-DevServer-14.1VC11\\data\\localweb\\projects\\ibsurvey\\artisan optimize"
 		],
 		"post-update-cmd": [
-			"php artisan clear-compiled",
-			"php artisan optimize"
+			"php C:\\MyPrograms\\EasyPHP-DevServer-14.1VC11\\data\\localweb\\projects\\ibsurvey\\artisan clear-compiled",
+			"php C:\\MyPrograms\\EasyPHP-DevServer-14.1VC11\\data\\localweb\\projects\\ibsurvey\\artisan optimize"
 		],
 		"post-create-project-cmd": [
-			"php artisan key:generate"
+			"php C:\\MyPrograms\\EasyPHP-DevServer-14.1VC11\\data\\localweb\\projects\\ibsurvey\\artisan key:generate"
 		]
 	},
 	"config": {

@@ -1,5 +1,5 @@
 <?php
-
+require_once 'config_db_vars.php';
 return array(
 
 	/*
@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => isset($_SERVER['DB1_HOST']) ? $_SERVER['DB1_HOST'] : 'localhost',
-			'database'  => 'ibsurvey',
-			'username'  => 'vivan',
-			'password'  => 'ghGZ47B1',
+			'host'      => $dbHost,
+			'database'  => $dbName,
+			'username'  => $dbUsername,
+			'password'  => $dbPassword,
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
@@ -114,7 +114,7 @@ return array(
 		'cluster' => false,
 
 		'default' => array(
-			'host'     => 'tunnel.pagodabox.com',
+			'host'     => '127.0.0.1',
 			'port'     => 6379,
 			'database' => 0,
 		),
