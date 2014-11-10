@@ -28,16 +28,7 @@ Route::get('account/delete', array('as' => 'deleteGet', 'uses' => 'AccountsContr
 Route::post('account/delete', array('as' => 'deletePost', 'uses' => 'AccountsController@deletePost'));
 Route::get('account/login', array('as' => 'loginGet', 'uses' => 'AccountsController@loginGet'));
 Route::post('account/login', array('as' => 'loginPost', 'uses' => 'AccountsController@loginPost'));
+Route::get('account/unlock', array('as' => 'unlock', 'uses' => 'AccountsController@unlock'));
 Route::get('account/logout', array('as' => 'logout', 'uses' => 'AccountsController@logout'));
 Route::get('account/password', array('as' => 'passwordGet', 'uses' => 'AccountsController@changePasswordGet'));
 Route::post('account/password', array('as' => 'passwordPost', 'uses' => 'AccountsController@changePasswordPost'));
-
-//Development Routes that should be deleted before the app is put into production mode.
-/*
-Route::get('/dev', function()
-{
-	return View::make('devform');
-});
-Route::post('/dev', 'DevTestController@devEdit');
-Route::get('dev/fast', 'DevTestController@quickUser');
-*/

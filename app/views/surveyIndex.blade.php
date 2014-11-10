@@ -12,14 +12,20 @@
 	#column1
 	{
 		float: left;
-		width: 	75%;
+		width: 	65%;
 	}
 	#column2
 	{
 		float: left;
-		width: 20%;
+		width: 30%;
 		height: 100%;
 		border-left: 1px solid black;
+	}
+	#column2 a, #coulmn2 a:visited
+	{
+		font-size: 10px;
+		text-decoration: none;
+		color: blue;
 	}
 	.clear
 	{
@@ -80,6 +86,10 @@ Here is a list of surveys for this school:
 				{{ link_to(URL::route('accountGet', array('intended' => Request::path(), 'edit' => $user->id)), "Update") }}
 				&nbsp&nbsp&nbsp
 				{{ link_to(URL::route('deleteGet', array('intended' => Request::path(), 'delete' => $user->id)), "Delete") }}
+				@if($user->failedAttempts > 6)
+					&nbsp&nbsp&nbsp
+					{{ link_to(URL::route('unlock', array('intended' => Request::path(), 'unlock' => $user->id)), "Unlock") }}
+				@endif
 			</span></li>
 		@endforeach
 		</ul>

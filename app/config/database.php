@@ -1,5 +1,5 @@
 <?php
-require_once 'config_db_vars.php';
+require_once '/../config_vars.php';
 return array(
 
 	/*
@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => $dbHost,
-			'database'  => $dbName,
-			'username'  => $dbUsername,
-			'password'  => $dbPassword,
+			'host'      => ConfigValues::DB_HOST,
+			'database'  => ConfigValues::DB_NAME,
+			'username'  => ConfigValues::DB_USERNAME,
+			'password'  => ConfigValues::DB_PASSWORD,
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

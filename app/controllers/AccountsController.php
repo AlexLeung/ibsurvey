@@ -6,13 +6,44 @@ class AccountsController extends \BaseController {
 		$email = Input::get('email');
 		$password = Input::get('password');
 		$intended = Input::get('intended');
-		$validator = Validator::make(
-				array('email' => $email, 'password' => $password),
-				array('email' => "required|email|exists:users,email,email,$email", 'password' => "required"));
-		if($validator->fails())
-			return Redirect::back()->withErrors($validator)->with('intended', $intended)->withInput();
-		if(!Auth::attempt(array('email' => $email, 'password' => $password)))
-			return Redirect::back()->with('authError', 'The selected password is invalid.')->with('intended', $intended)->withInput();
+		$hadRecaptcha = Input::get('hadRecaptcha');
+		$user = User::where('email', '=', $email)->first();
+		if(!$user)
+			return Redirect::back()
+				->with('authError', 'The email or password is invalid.')
+				->with('intended', $intended)
+				->withInput();
+		if($user->failedAttempts > 6)
+			return Redirect::to(Request::path())->with('intended', $intended)->with('locked', true);
+		if($user->failedAttempts > 3)
+		{
+			if(!$hadRecaptcha)
+				return Redirect::back()->with('intended', $intended)->with('needsRecaptcha', true)->withInput();
+			$validator = Validator::make(array('recaptcha response' => Input::get('recaptcha_response_field')),
+					array('recaptcha response' => 'required|recaptcha'));
+			try 
+			{
+				if($validator->fails())
+					return Redirect::back()->withErrors($validator)->with('intended', $intended)->withInput()->with('needsRecaptcha', true);
+			}
+			catch(Exception $e)
+			{
+				return Redirect::to("/");
+			}
+		}
+		if(!Hash::check($password, $user->password))
+		{
+			$user->failedAttempts++;
+			$user->save();
+			return Redirect::back()
+				->with('authError', 'The email or password is invalid.')
+				->with('intended', $intended)
+				->withInput()
+				->with('needsRecaptcha', $user->failedAttempts > 3);
+		}
+		$user->failedAttempts = 0;
+		$user->save();	
+		Auth::login($user);
 		return Redirect::to(Request::path())->with('intended', $intended);
 	}
 	
@@ -20,21 +51,36 @@ class AccountsController extends \BaseController {
 	{
 		$input = Input::all();
 		if(count($input) && $input['QS'])
-			return Redirect::to(Request::path())->with('intended', "{$input['QS']}");
+		{
+			if(isset($input['locked']))
+				return Redirect::to(Request::path())->with('intended', $input['QS'])->with('locked', $input['locked']);
+			return Redirect::to(Request::path())->with('intended', $input['QS']);
+		}
 		$intended = Session::get('intended');
 		if(Auth::check())
-			return Redirect::to("/$intended");
-		return View::make('authView')->with('authError', '')->with('intended',$intended);
+			return Redirect::to($intended);
+		if(Session::has('locked'))
+			return View::make('locked')->with('intended', $intended);
+		return View::make('authView')->with('intended',$intended);
+	}
+	
+	public function unlock()
+	{
+		$intended = Input::get('intended');
+		$user = User::find(Input::get('unlock'));
+		if(!is_null($user) && Auth::check() && Auth::user()->group->name == "Admin")
+		{
+			$user->failedAttempts = 0;
+			$user->save();
+		}
+		return Redirect::to($intended);
 	}
 	
 	public function logout()
 	{
 		$intended = Input::get('QS');
 		Auth::logout();
-		if($intended)
-			return Redirect::to("/$intended");
-		else
-			return Redirect::to('/');
+		return Redirect::to($intended);
 	}
 	
 	public function changePasswordGet()
@@ -95,7 +141,7 @@ class AccountsController extends \BaseController {
 				$user->save();
 			}
 		}
-		return Redirect::to("/{$data['intended']}");
+		return Redirect::to($data['intended']);
 	}
 	
 	public function accountGet()
@@ -206,9 +252,9 @@ class AccountsController extends \BaseController {
 			$user->name = $data['name'];
 			$user->email = $data['email'];
 			$user->save();
-			return Redirect::to("/{$data['intended']}");
+			return Redirect::to($data['intended']);
 		}
-		return Redirect::to("/{$data['intended']}");
+		return Redirect::to($data['intended']);
 	}
 	
 	public function deleteGet()
@@ -260,7 +306,7 @@ class AccountsController extends \BaseController {
 				$user->delete();
 			}
 		}
-		return Redirect::to("/{$data['intended']}");
+		return Redirect::to($data['intended']);
 	}
 	
 }

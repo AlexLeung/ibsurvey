@@ -45,12 +45,12 @@ function determineBrowser() {
 		Before you proceed to the survey, would you like to:
 		<br>
 		{{ Form::open(array('method' => 'put')) }}
-		{{ Form::input('submit', 'createAccount', 'Create New Profile') }}
+		{{ Form::input('submit', 'createAccount', 'Create Full Profile') }}
 		 or 
 		{{ Form::input('submit', 'anonymous', 'Remain Anonymous') }}
 		{{ Form::close() }}
 		<br>
-		(Completing your survey while signed into a profile allows you to save progress on your survey, then come back to it later via the "Log in" link.)
+		(Completing your survey while signed into a full profile allows you to save progress on your survey, then come back to it later via the "Log in" link.)
 	@elseif($state == "survey")
 		{{ $message }}
 		<br>
