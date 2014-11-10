@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head>
+<title>IB Surveys</title>
 <style type="text/css">
+@import url(//fonts.googleapis.com/css?family=Lato:700);
 .error
 {
 	background-color: red;
@@ -13,6 +15,10 @@
 	color: tan;
 	text-align: center;
 }
+body {
+	margin:0;
+	font-family:'Lato', sans-serif;
+}
 </style>
 @yield('head')
 </head>
@@ -20,12 +26,18 @@
 @section('body')
 	<div style="text-align: right; padding-right: 20px; border-bottom: 1px black solid;">
 		@if(Auth::check())
-			| {{ Auth::user()->email }} |&nbsp&nbsp&nbsp
-			{{ Auth::user()->name }}'s Account:
-			&nbsp&nbsp&nbsp
-			{{ link_to(URL::route('passwordGet', array('intended' => Request::path())), "Change Password") }}
-			&nbsp&nbsp&nbsp
-			{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Update Account") }}
+			@if(Auth::user()->name == "Anonymous")
+				Anonymous Account:
+				&nbsp&nbsp&nbsp
+				{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Create Full Profile (letting you save progress)") }}
+			@else
+				| {{ Auth::user()->email }} |&nbsp&nbsp&nbsp
+				{{ Auth::user()->name }}'s Account
+				&nbsp&nbsp&nbsp
+				{{ link_to(URL::route('passwordGet', array('intended' => Request::path())), "Change Password") }}
+				&nbsp&nbsp&nbsp
+				{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Update Account Details") }}
+			@endif
 			&nbsp&nbsp&nbsp
 			{{ link_to(URL::route('logout', array('QS' => Request::path())), "Log out") }}
 		@else

@@ -1,5 +1,5 @@
 <?php
-require_once 'config_debug_vars.php';
+require_once '/../config_vars.php';
 return array(
 
 	/*
@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => $debugSettings,
+	'debug' => ConfigValues::BEBUG_MODE,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'YourSecretKey!!!',
+	'key' => ConfigValues::SECRET_APP_KEY,
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -95,6 +95,7 @@ return array(
 
 	'providers' => array(
 
+		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 		'Fideloper\Proxy\ProxyServiceProvider',
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
