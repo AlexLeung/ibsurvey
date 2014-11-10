@@ -1,5 +1,5 @@
 <?php
-require_once '/../config_vars.php';
+require_once app_path().'/config_vars.php';
 return array(
 
 	/*
@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => ConfigValues::BEBUG_MODE,
+	'debug' => ConfigValues::DEBUG_MODE,
 
 	/*
 	|--------------------------------------------------------------------------
