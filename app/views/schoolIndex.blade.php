@@ -2,7 +2,7 @@
 
 @section('body')
 	@parent
-	<h4>Here is a list of Schools that use ibsurvey.com:</h4>
+	Here is a list of Schools that use ibsurvey.com:
 	@if(count($schoolNames))
 		<ol>
 			@foreach($schoolNames as $schoolName)
