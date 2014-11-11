@@ -63,7 +63,7 @@ function determineBrowser() {
 		<table class="mainEvaluation">
 		<tbody>
 		<?php
-			include app_path().'/Views/tableTop.html'; 
+			include app_path().'/views/tableTop.html'; 
 			$questionNumber = 0; 
 		?>
 		@foreach($questionStore as $question)

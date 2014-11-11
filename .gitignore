@@ -10,3 +10,5 @@ Thumbs.db
 .project
 .settings/
 /app/config_vars.php
+/app/answers
+/app/questions
