@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+<link rel="shortcut icon" href="/files/image/ibsurveys.ico">
 <title>IB Surveys</title>
 <style type="text/css">
 @import url(//fonts.googleapis.com/css?family=Lato:700);
@@ -15,6 +16,20 @@
 	color: tan;
 	text-align: center;
 }
+
+#header a, #header a:visited
+{
+	text-decoration:none; 
+}
+
+#header
+{
+	text-align: right; 
+	padding-right: 20px; 
+	border-bottom: 1px black solid;
+	color: #999;
+}
+
 body {
 	margin:0;
 	font-family:'Lato', sans-serif;
@@ -24,7 +39,7 @@ body {
 </head>
 <body>
 @section('body')
-	<div style="text-align: right; padding-right: 20px; border-bottom: 1px black solid;">
+	<div id="header">
 		@if(Auth::check())
 			@if(Auth::user()->name == "Anonymous")
 				Anonymous Account:

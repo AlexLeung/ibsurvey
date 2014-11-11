@@ -10,20 +10,11 @@ class SchoolsController extends \BaseController {
 	public function index()
 	{
 		$schools = School::all();
-		echo '<h4>Here is a list of Schools that use ibsurvey.com:</h4>';
-		if(!$schools->count())
-		{
-			echo '<br>There are no schools using this site.';
-			return;	
-		}
 		$schoolNames = array();
 		foreach ($schools as $school)
 			array_push($schoolNames, $school->name);
 		sort($schoolNames);
-		echo '<ol>';
-		foreach($schoolNames as $schoolName)
-			echo "<li><a href=\"schools/$schoolName\">$schoolName</a></li>";
-		echo '</ol>';
+		return View::make('schoolIndex')->with('schoolNames', $schoolNames);
 	}
 
 	/**

@@ -97,13 +97,25 @@ Here is a list of surveys for this school:
 	@endforeach
 	</ul>
 	<script type="text/javascript">
-	$(".Collapsable").click(function () {
-		if($(this).hasClass('down'))
-			$(this).removeClass('down').addClass('up');
-		else if($(this).hasClass('up'))
-			$(this).removeClass('up').addClass('down');
-        $(this).parent().children().toggle();
-        $(this).toggle();
+	$(".Collapsable").click(function (e) {
+		if(e.pageX < $(this).offset().left + 10 )
+		{
+			if($(this).hasClass('down'))
+				$(this).removeClass('down').addClass('up');
+			else if($(this).hasClass('up'))
+				$(this).removeClass('up').addClass('down');
+	        $(this).parent().children().toggle();
+	        $(this).toggle();
+		}
+    });
+    $(".Collapsable").mousemove(function (e) {
+		if($(this).hasClass('up') || $(this).hasClass('down'))
+		{
+			if(e.pageX < $(this).offset().left + 10)
+				$(this).css('cursor', 'pointer');
+			else
+				$(this).css('cursor', 'auto');
+		}
     });
 	</script>
 	</div>
