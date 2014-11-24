@@ -1,5 +1,4 @@
 <?php
-use Monolog\Handler\NullHandler;
 /*
 |--------------------------------------------------------------------------
 | Application Routes

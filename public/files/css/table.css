@@ -62,30 +62,32 @@ td td {
 
 .Chrome .tableColumnRadios label{
   padding-left:50px;  
-  padding-top:32px;
-  padding-bottom:51px;
+  padding-top:31px;
+  padding-bottom:50px;
 }
 
 /*Safari radio handling*/
 
 .Safari .tableColumnRadios input[type="radio"] {
-    display: auto;
+  padding-left:50px;  
+  padding-top:32px;
+  padding-bottom:51px;
 }
 
 /*IE radio handling*/
 
 .IE .tableColumnRadios label{
   padding-left:50px;  
-  padding-top:31px;
-  padding-bottom:51px;
+  padding-top:41px;
+  padding-bottom:40px;
 }
 
 /*Firefox radio handling*/
 
 .Firefox .tableColumnRadios label{
   padding-left:50px;  
-  padding-top:31px;
-  padding-bottom:51px;
+  padding-top:40px;
+  padding-bottom:40px;
 }
 
 /*back to other table stuff*/
