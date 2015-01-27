@@ -82,5 +82,5 @@ require app_path().'/filters.php';
 
 App::missing(function($exception)
 {
-	return Response::view('errorView', array(), 404);
+	return Response::view('center.errorView', array(), 404);
 });

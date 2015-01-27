@@ -58,7 +58,7 @@ Q|Teacher,Student|C26|The written curriculum incorporates relevant experiences f
 Q|Teacher,Student|C27|The written curriculum promotes students’ awareness of individual, local, national and world issues.
 Q|Teacher,Student|C28|The written curriculum provides opportunities for reflection on human commonality, diversity and multiple perspectives.
 Q|Admin,Teacher|C29|The written curriculum is informed by current IB publications and is reviewed regularly to incorporate developments in the programme(s).
-Q|Admin,Teacher|C210|The written curriculum integrates the policies developed by the school to support the programme(s).\\
+Q|Admin,Teacher|C210|The written curriculum integrates the policies developed by the school to support the programme(s).
 Q|Admin,Teacher|C211|The written curriculum fosters development of the IB learner profile attributes.
 Q|Teacher,Student|C31a|Teaching and learning at the school addresses all of the aims and objectives of each subject.
 Q|Teacher,Student|C32|Teaching and learning engages students as inquirers and thinkers.

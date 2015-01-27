@@ -14,7 +14,7 @@ class SurveysController extends \BaseController {
 			return Redirect::to('/schools');
 		foreach($school->surveys as $survey)
 			$surveyNames[] = $survey->name;
-		return View::make('surveyIndex')->with('school', $school)->with('surveyNames', $surveyNames);
+		return View::make('content.surveyIndex')->with('school', $school)->with('surveyNames', $surveyNames);
 	}
 
 
@@ -71,7 +71,7 @@ class SurveysController extends \BaseController {
 			$groupInfo['active'] = $active;
 			array_push($groupStats, $groupInfo);
 		}
-		return View::make('surveyShow')
+		return View::make('content.surveyShow')
 			->with('school', $school)
 			->with('survey', $survey)
 			->with('groupStats', $groupStats);

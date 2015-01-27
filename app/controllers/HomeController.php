@@ -17,7 +17,7 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
-		return View::make('front');
+		return View::make('center.front')->with('loggedIn', Auth::check());
 	}
 
 }

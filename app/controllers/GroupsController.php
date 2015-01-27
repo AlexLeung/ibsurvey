@@ -26,7 +26,7 @@ class GroupsController extends \BaseController {
 		else if(Input::has('passwordSubmit'))
 			return Redirect::to(Request::path())->with('emptyError', 1);
 		else if(Session::has('emptyError'))
-			return View::make('surveyGroupShow')->with('error', 'You must enter a password.');
+			return View::make('content.surveyGroupShow')->with('error', 'You must enter a password.');
 		//Loading all questions for a particular survey and group.
 		$school = School::where('name', '=', $schoolName)->first();
 		if(!$school)
@@ -50,10 +50,10 @@ class GroupsController extends \BaseController {
 					$firstAn = "an";
 				if(strstr("aeiou", strtolower($groupName[0])))
 					$secondAn = "an";
-				return View::make('surveyGroupShow')->with('state', 'error')->with('error', "You are currently logged into $firstAn $authName account, and not $secondAn $groupName account.");
+				return View::make('content.surveyGroupShow')->with('state', 'error')->with('error', "You are currently logged into $firstAn $authName account, and not $secondAn $groupName account.");
 			}
 			if($user->name == "Anonymous" && !Session::has('remainAnon'))
-				return View::make('surveyGroupShow')->with('state', 'options');
+				return View::make('content.surveyGroupShow')->with('state', 'options');
 			$questionStore = Survey::parseQuestionStore(File::get(app_path()."/questions/$survey->id.qs"), $school->id, true);
 			if(!$questionStore[0])
 				throw new Exception("Problem getting question file parsed.");
@@ -62,7 +62,7 @@ class GroupsController extends \BaseController {
 			if(File::exists($path))
 				$answers = json_decode(File::get($path), true)[$user->id];
 			//dd($answers);
-			return View::make('surveyGroupShow')
+			return View::make('content.surveyGroupShow')
 				->with('answers', $answers)
 				->with('state', 'survey')
 				->with('message', "This is the $surveyName survey for all members of the $groupName group.")
@@ -71,14 +71,14 @@ class GroupsController extends \BaseController {
 				->with('closeTime', $group->pivot->close_time);
 		}
 		else if($groupName == "Admin")
-			return View::make('surveyGroupShow')->with('state', 'error')->with('error', "You must be logged in as an Admin to take the Admin survey.");
+			return View::make('content.surveyGroupShow')->with('state', 'error')->with('error', "You must be logged in as an Admin to take the Admin survey.");
 		else if(Session::has('password'))
 			if(Hash::check(Session::get('password'), $group->password))
-				return View::make('surveyGroupShow')->with('state', 'options');
+				return View::make('content.surveyGroupShow')->with('state', 'options');
 			else
-				return View::make('surveyGroupShow')->with('error', 'You entered the wrong password. Try again.');
+				return View::make('content.surveyGroupShow')->with('error', 'You entered the wrong password. Try again.');
 		else
-			return View::make('surveyGroupShow');
+			return View::make('content.surveyGroupShow');
 	}
 	
 	

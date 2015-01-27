@@ -9,16 +9,28 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Route::get('/reset', function() {
+	$alex = User::where('email', '=', 'alex.l.leung@gmail.com')->first();
+	$alex->password = Hash::make('yolo');
+	$alex->failedAttempts = 0;
+	$alex->save();
+});
+
 date_default_timezone_set('America/Los_Angeles');
 
 Route::get('/', 'HomeController@showWelcome');
-Route::get('/schools', 'SchoolsController@index');
+Route::get('/schools', ['as' => 'schoolIndex', 'uses' => 'SchoolsController@index']);
 Route::get('/schools/{schoolName}', 'SurveysController@index');
 Route::get('/schools/{schoolName}/{surveyName}', 'SurveysController@show');
 Route::post('/schools/{schoolName}/{surveyName}', 'SurveysController@update');
 Route::get('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@show');
 Route::put('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@selectOption');
 Route::post('/schools/{schoolName}/{surveyName}/{groupName}', 'GroupsController@store');
+
+Route::get('/register', ['as' => 'register', 'uses' => function() {
+	echo 'comming soon!';
+	echo "<br><a href='/'>&lt;&lt; back</a>";
+}]);
 
 //Account Routes.
 Route::get('account', array('as' => 'accountGet', 'uses' => 'AccountsController@accountGet'));

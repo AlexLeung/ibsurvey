@@ -14,7 +14,7 @@ class SchoolsController extends \BaseController {
 		foreach ($schools as $school)
 			array_push($schoolNames, $school->name);
 		sort($schoolNames);
-		return View::make('schoolIndex')->with('schoolNames', $schoolNames);
+		return View::make('content.schoolIndex')->with('schoolNames', $schoolNames);
 	}
 
 	/**

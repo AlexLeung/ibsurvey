@@ -95,7 +95,6 @@ return array(
 
 	'providers' => array(
 
-		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
 		'Fideloper\Proxy\ProxyServiceProvider',
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',

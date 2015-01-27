@@ -6,41 +6,41 @@ class AccountsController extends \BaseController {
 		$email = Input::get('email');
 		$password = Input::get('password');
 		$intended = Input::get('intended');
-		$hadRecaptcha = Input::get('hadRecaptcha');
 		$user = User::where('email', '=', $email)->first();
+		$errors = [];
+		$recaptchaRequired = false;
 		if(!$user)
-			return Redirect::back()
-				->with('authError', 'The email or password is invalid.')
-				->with('intended', $intended)
-				->withInput();
+			$errors['auth'] = 'email or password is invalid';
 		if($user->failedAttempts > 6)
-			return Redirect::to(Request::path())->with('intended', $intended)->with('locked', true);
+			return Redirect::to(Request::path())->with('intended', $intended)
+												->with('locked', true);
 		if($user->failedAttempts > 3)
 		{
-			if(!$hadRecaptcha)
-				return Redirect::back()->with('intended', $intended)->with('needsRecaptcha', true)->withInput();
-			$validator = Validator::make(array('recaptcha response' => Input::get('recaptcha_response_field')),
-					array('recaptcha response' => 'required|recaptcha'));
-			try 
+			$recaptchaRequired = true;
+			if(!Input::has('g-recaptcha-response'))
+				$errors['recaptcha'] = "failed login attempts: $user->failedAttempts";
+			else
 			{
-				if($validator->fails())
-					return Redirect::back()->withErrors($validator)->with('intended', $intended)->withInput()->with('needsRecaptcha', true);
-			}
-			catch(Exception $e)
-			{
-				return Redirect::to("/");
+				$url = 'https://www.google.com/recaptcha/api/siteverify';
+				$query_string = 'secret=6Lfwm_wSAAAAABeIj7iJh9x7ecfxQy2cgvU5rnC1&response='.Input::get('g-recaptcha-response');
+				$result = file_get_contents("$url?$query_string");
+				$result = json_decode($result);
+				if(!$result->success)
+					$errors['recaptcha'] = 'recaptcha incorrectly solved';
 			}
 		}
 		if(!Hash::check($password, $user->password))
 		{
 			$user->failedAttempts++;
 			$user->save();
-			return Redirect::back()
-				->with('authError', 'The email or password is invalid.')
-				->with('intended', $intended)
-				->withInput()
-				->with('needsRecaptcha', $user->failedAttempts > 3);
+			$errors['auth'] = 'email or password is invalid';
 		}
+		if(count($errors))
+			return Redirect::back()
+				->with('intended', $intended)
+				->with('recaptchaRequired', $recaptchaRequired)
+				->withErrors($errors)
+				->withInput();
 		$user->failedAttempts = 0;
 		$user->save();	
 		Auth::login($user);
@@ -50,18 +50,18 @@ class AccountsController extends \BaseController {
 	public function loginGet()
 	{
 		$input = Input::all();
-		if(count($input) && $input['QS'])
+		if(count($input) && $input['intended'])
 		{
 			if(isset($input['locked']))
-				return Redirect::to(Request::path())->with('intended', $input['QS'])->with('locked', $input['locked']);
-			return Redirect::to(Request::path())->with('intended', $input['QS']);
+				return Redirect::to(Request::path())->with('intended', $input['intended'])->with('locked', $input['locked']);
+			return Redirect::to(Request::path())->with('intended', $input['intended']);
 		}
 		$intended = Session::get('intended');
 		if(Auth::check())
 			return Redirect::to($intended);
 		if(Session::has('locked'))
-			return View::make('locked')->with('intended', $intended);
-		return View::make('authView')->with('intended',$intended);
+			return View::make('center.locked')->with('intended', $intended);
+		return View::make('center.authView')->with('intended',$intended);
 	}
 	
 	public function unlock()
@@ -78,7 +78,7 @@ class AccountsController extends \BaseController {
 	
 	public function logout()
 	{
-		$intended = Input::get('QS');
+		$intended = Input::get('intended');
 		Auth::logout();
 		return Redirect::to($intended);
 	}
@@ -96,7 +96,7 @@ class AccountsController extends \BaseController {
 			$group = null;
 			if(Auth::user()->group->name == "Admin" && is_numeric($groupId) && $groupId != -1)
 				$group = Group::find($groupId);
-			return View::make('changePassword')->with('intended', $intended)->with('group', $group);
+			return View::make('center.changePassword')->with('intended', $intended)->with('group', $group);
 		}
 		return Redirect::to('/');
 	}
@@ -107,13 +107,20 @@ class AccountsController extends \BaseController {
 		if(Auth::check())
 		{
 			$rules = array('newPass' => 'required', 'rePass' => 'required|same:newPass', 'password' => 'required');
+			$messages = ['newPass.required' => 'a new password is required',
+						 'rePass.same' => 'both passwords must match',
+						 'rePass.required' => 'both passwords must match',
+						 'password.required' => 'your password is required'];
 			$user = Auth::user();
 			$editingGroup = $data['groupId'] != -1 && $user->group->name == "Admin" && $user->group->school->groups->contains($data['groupId']);	
 			if($editingGroup)
+			{
 				$rules['groupPassword'] = 'required';
+				$messages['groupPassword.required'] = "the group's password is required";
+			}
 			else 
 				$data['groupId'] = -1;
-			$validator = Validator::make($data, $rules);
+			$validator = Validator::make($data, $rules, $messages);
 			if($validator->fails())
 				return Redirect::back()
 					->with('intended', $data['intended'])
@@ -122,7 +129,7 @@ class AccountsController extends \BaseController {
 			if(!Hash::check($data['password'], $user->password))
 				return Redirect::back()
 					->with('intended', $data['intended'])
-					->with('passwordError', 'The selected password invalid')
+					->withErrors(['password' => 'you entered an invalid password'])
 					->with('group', $data['groupId']);
 			if($editingGroup)
 			{
@@ -130,7 +137,7 @@ class AccountsController extends \BaseController {
 				if(!Hash::check($data['groupPassword'], $group->password))
 					return Redirect::back()
 						->with('intended', $data['intended'])
-						->with('groupPassError', 'The selected password invalid')
+						->withErrors(['groupPassword' => "the group's password was invalid"])
 						->with('group', $data['groupId']);
 				$group->password = Hash::make($data['newPass']);
 				$group->save();
@@ -174,7 +181,7 @@ class AccountsController extends \BaseController {
 			}
 			else
 				$user = Auth::user();
-			return View::make('updateAccount')
+			return View::make('center.updateAccount')
 				->with('user', $user)
 				->with('intended', Session::get('intended'));
 		}	
@@ -217,7 +224,7 @@ class AccountsController extends \BaseController {
 			$emailUser = User::where('email', '=', $data['email'])->first();
 			if(!is_null($emailUser) && $emailUser->id != $user->id)
 				return Redirect::back()
-					->with('emailError', 'The selected email already exists.')
+					->withError(['email' => 'the entered email already exists'])
 					->with('edit', $id)
 					->with('intended', $data['intended'])
 					->withInput();
@@ -225,7 +232,7 @@ class AccountsController extends \BaseController {
 			{
 				if(!Auth::attempt(array('id' => Auth::user()->id, 'password' => $data['password'])))
 					return Redirect::back()
-						->with('authError', 'The selected password is invalid.')
+						->withErrors(['password' => 'you entered invalid password'])
 						->with('intended', $data['intended'])
 						->with('edit', $id)
 						->withInput();
@@ -234,14 +241,14 @@ class AccountsController extends \BaseController {
 				return Redirect::back()
 					->withInput()
 					->with('edit', $id)
-					->with('nameError', "One's name cannot be \"Anonymous\".")
+					->withErrors(['name' => "one's name cannot be \"Anonymous\""])
 					->with('intended', $data['intended']);
 			if($isAdmin)
 			{
 				$group = Group::where('name', '=', $data['group'])->where('school_id', '=', Auth::user()->group->school->id)->first();
 				if(!$group)
 					return Redirect::back()
-						->with('groupError', 'The selected group does not exist.')
+						->withErrors(['group', 'the entered group does not exist'])
 						->with('intended', $data['intended'])
 						->with('edit', $id)
 						->withInput();
@@ -272,7 +279,7 @@ class AccountsController extends \BaseController {
 				$user = User::find($delete);
 				if(!is_null($user))
 				{
-					return View::make('deleteAccount')
+					return View::make('center.deleteAccount')
 						->with('user', $user)
 						->with('intended', $intended);	
 				}
@@ -286,7 +293,7 @@ class AccountsController extends \BaseController {
 		$data = Input::all();
 		if(Auth::check() && Auth::user()->group->name == "Admin")
 		{
-			$validator = Validator::make($data, array('password' => 'required'));
+			$validator = Validator::make($data, ['password' => 'required'], ['password.required' => 'your password is required']);
 			if($validator->fails())
 				return Redirect::back()
 					->withErrors($validator)
@@ -294,7 +301,7 @@ class AccountsController extends \BaseController {
 					->with('delete', $data['delete']);
 			if(!Hash::check($data['password'], Auth::user()->password))
 				return Redirect::back()
-					->with('passwordError', 'The selected password is invalid')
+					->withErrors(['password' => 'you entered an invalid password'])
 					->with('intended', $data['intended'])
 					->with('delete', $data['delete']);
 			$user = User::find($data['delete']);
