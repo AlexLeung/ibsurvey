@@ -24,7 +24,7 @@
 	color: #4a4a4a;
 }
 .bar-left-wrapper > div:first-of-type {
-	width: 8px;
+	width: 10px;
 	height: 100%;
 	float: left;
 	position: absolute;
@@ -32,30 +32,29 @@
 .bar-left-wrapper > div:first-of-type+div {
 	padding: 10px 20px;
 }
-.bar-left-wrapper:not(:first-of-type) {
-	margin-top: 10px;
-}
-.bar-left-wrapper ul {
-	margin: 0;
-	padding-top: 5px;
-	padding-left: 20px;
-	padding-bottom: 0;
-	padding-right: 0;
-	font-size: 19px;
-}
 .bar-left-wrapper a {
 	text-decoration: none;
-	color: #4a4a4a;
+	background: #838383;
+	font-weight: 200;
+	padding: 5px;
+	margin-top: 5px;
+	font-size: 19px;
+	color: white;
 }
 .bar-left-wrapper a:hover {
-	color: #303030;
+	background: #696969;
 }
-.bar-left-wrapper:last-of-type a {
-	color: #ff5469;
-	font-weight: bold;
+.bar-left-wrapper a:active {
+	background: #4f4f4f;
 }
 .bar-left-wrapper span {
 	font-weight: bold;
+}
+.bar-left-wrapper span~div {
+	margin-top: 8px;
+}
+.bar-left-wrapper+div {
+	margin-top: 12px;
 }
 </style>
 @stop
@@ -71,27 +70,17 @@
 				<div>
 				@if(Auth::user()->name == "Anonymous")
 					<span>Anonymous Account</span>
-					<ul>
-						<li>{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Create Full Profile (letting you save progress)") }}</li>
-					</ul>
+					<div>{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Create Full Profile (letting you save progress)") }}</div>
 				@else
 					<span>{{ Auth::user()->name }}</span>
-					<ul>
-						<li>{{ link_to(URL::route('passwordGet', array('intended' => Request::path())), "Change Password") }}</li>
-						<li>{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Update Account Details") }}</li>
-					</ul>
+					<div>{{ link_to(URL::route('passwordGet', array('intended' => Request::path())), "Change Password") }}</div>
+					<div>{{ link_to(URL::route('accountGet', array('intended' => Request::path())), "Update Account Details") }}</div>
 				@endif
 				</div>
 			</div>
-			<div class="bar-left-wrapper">
-				<div style="background-color: #ff5469;"></div>
-				<div>{{ link_to(URL::route('logout', array('intended' => Request::path())), "Log-Out") }}</div>
-			</div>
+			<div>{{ link_to(URL::route('logout', ['intended' => Request::path()]), "Log-Out", ['class' => 'lightRed']) }}</div>
 		@else
-			<div class="bar-left-wrapper">
-				<div style="background-color: #ff5469;"></div>
-				<div>{{ link_to(URL::route('loginGet', array('intended' => Request::path())), "Login") }}</div>
-			</div>
+			<div>{{ link_to(URL::route('loginGet', ['intended' => Request::path()]), "Login", ['class' => 'lightRed']) }}</div>
 		@endif
 		</div>
 		@yield('sidebar')
