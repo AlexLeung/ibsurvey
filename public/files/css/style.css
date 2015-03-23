@@ -26,6 +26,12 @@ body {
     margin: 0;
 }
 
+a.redlink {
+    font-size: 18px;
+    color: #FF5469;
+    line-height: 21px;
+}
+
 div.center {
 	position: absolute;
 	left: 50%;
@@ -73,6 +79,17 @@ input:-webkit-autofill {
 input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 50px #ff5469 inset;
     -webkit-text-fill-color: #333;
+}
+
+a.gray-button
+{
+    text-decoration: none;
+    background: #838383;
+    font-weight: 200;
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 19px;
+    color: white;
 }
 
 .item {
