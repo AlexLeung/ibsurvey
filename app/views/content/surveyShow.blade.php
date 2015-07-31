@@ -5,21 +5,19 @@
 ?>
 @section('content')
 @parent
-{{$school->name}}'s survey:<br><h2>{{$survey->name}}</h2>
+<div class="header">{{$school->name}}'s Survey</div>
 @if($isAdmin)
 	{{ Form::open() }}
-	{{ Form::label('name', 'New Name: ') }}
-	{{ Form::text('name', '', array()) }}
-	{{ Form::input('submit', 'changeName', 'Change Name') }}
-	@if($errors->get('name'))
+	<h2>{{$survey->name}}</h2>
+	{{ Form::input('submit', 'changeName', 'Change Name', ['class' => 'editButton']) }}
+	@if($errors->has('name'))
 		<div class="error">
 			{{ $errors->first('name') }}
 		</div>
-	@elseif(isset($session['name']))
-		<div class="error">
-			{{ $session['name'] }}
-		</div>
 	@endif
+	{{ Form::close() }}
+@else
+	<h2>{{$survey->name}}</h2>
 @endif
 <br>
 <br>

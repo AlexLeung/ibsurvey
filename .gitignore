@@ -13,3 +13,5 @@ Thumbs.db
 /app/answers
 /app/questions
 /public/files/image/low-poly-texture-3_39.svg
+
+.idea/

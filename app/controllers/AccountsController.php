@@ -11,10 +11,10 @@ class AccountsController extends \BaseController {
 		$recaptchaRequired = false;
 		if(!$user)
 			$errors['auth'] = 'email or password is invalid';
-		if($user->failedAttempts > 6)
+		else if($user->failedAttempts > 6)
 			return Redirect::to(Request::path())->with('intended', $intended)
 												->with('locked', true);
-		if($user->failedAttempts > 3)
+		else if($user->failedAttempts > 3)
 		{
 			$recaptchaRequired = true;
 			if(!Input::has('g-recaptcha-response'))
@@ -29,7 +29,7 @@ class AccountsController extends \BaseController {
 					$errors['recaptcha'] = 'recaptcha incorrectly solved';
 			}
 		}
-		if(!Hash::check($password, $user->password))
+		else if(!Hash::check($password, $user->password))
 		{
 			$user->failedAttempts++;
 			$user->save();

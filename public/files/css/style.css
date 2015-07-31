@@ -26,6 +26,12 @@ body {
     margin: 0;
 }
 
+a.redlink {
+    font-size: 18px;
+    color: #FF5469;
+    line-height: 21px;
+}
+
 div.center {
 	position: absolute;
 	left: 50%;
@@ -50,6 +56,22 @@ div#home-right {
     opacity: 0.85;
 }
 
+div.header {
+	background: #4a4a4a;
+	display: inline-block;
+	font-weight: 600;
+	font-size: 28px;
+	color: #fff;
+	padding: 7px;
+}
+input.editButton {
+	display: inline;
+	background: #838383;
+	color: white;
+	border: none;
+	padding: 5px;	
+}
+
 input:-webkit-autofill {
     -webkit-box-shadow:0 0 0 50px #ff5469 inset; /* Change the color to your own background color */
     -webkit-text-fill-color: #333;
@@ -57,6 +79,17 @@ input:-webkit-autofill {
 input:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0 50px #ff5469 inset;
     -webkit-text-fill-color: #333;
+}
+
+a.gray-button
+{
+    text-decoration: none;
+    background: #838383;
+    font-weight: 200;
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 19px;
+    color: white;
 }
 
 .item {
@@ -117,4 +150,19 @@ input:-webkit-autofill:focus {
 
 .item input[type="submit"]:active {
     background: #171717;
+}
+.lightRed {
+	color: #ffffff;
+	background: #ff5469;
+	padding: 5px;
+	text-decoration: none;
+}
+a.lightRed {
+	font-weight: 900;
+}
+a.lightRed:hover {
+	background: #ff3b52;
+}
+a.lightRed:active {
+	background: #ff213b;
 }

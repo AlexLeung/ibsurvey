@@ -11,3 +11,6 @@
 |
 */
 
+Artisan::add(new seedUsersInitial);
+Artisan::add(new seedSurveyTable);
+
