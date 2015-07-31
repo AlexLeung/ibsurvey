@@ -11,7 +11,7 @@
 */
 Route::get('/reset', function() {
 	$alex = User::where('email', '=', 'alex.l.leung@gmail.com')->first();
-	$alex->password = Hash::make('yolo');
+	//$alex->password = Hash::make('');
 	$alex->failedAttempts = 0;
 	$alex->save();
 });
